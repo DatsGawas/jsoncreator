@@ -1,0 +1,73 @@
+<button (click)="addParentObject()">add Object</button>&nbsp;<button (click)="addParentArray()">add Array</button>
+
+
+<amexio-row>
+  <amexio-column [size]="'12'">
+    <canvas-tree-data-table [data]="localTreeData">
+      <canvas-tree-column [data-index]="'key'"
+                          [data-type]="'string'" [hidden]="false"
+                          [text]="'Key'" [width]="50">
+        <ng-template #amexioBodyTmpl let-column let-row="row" let-index="index">
+          <ng-container *ngIf="row?.readOnly;else key_else">
+            {{row.key}}
+          </ng-container>
+          <ng-template #key_else>
+            <input type="text" [ngModel]="row.key" (ngModelChange)="keyOnChange($event,row)"/>
+          </ng-template>
+        </ng-template>
+      </canvas-tree-column>
+      <canvas-tree-column [data-index]="'value'"
+                          [data-type]="'string'" [hidden]="false"
+                          [text]="'Value'" [width]="30">
+        <ng-template #amexioBodyTmpl let-column let-row="row">
+          <ng-container *ngIf="row?.readOnly;else value_else">
+            {{row.key}}
+          </ng-container>
+          <ng-template #value_else>
+            <input type="text" [ngModel]="row.value" (ngModelChange)="valueOnChange($event,row)"/>
+          </ng-template>
+
+
+        </ng-template>
+      </canvas-tree-column>
+      <canvas-tree-column
+        [data-type]="'string'"
+        [text]="'Action'" [width]="20">
+        <ng-template #amexioHeaderTmpl let-column="column" let-index="index">
+          {{column.text}} &nbsp;
+          <amexio-image [icon-class]="'fa fa-code'" style="padding-left: 2px;"
+                        [tooltip]="'Object'" (onClick)="addParentObject('object')">
+          </amexio-image>
+          <amexio-image [icon-class]="'fa fa-table'" style="padding-left: 2px;"
+                        [tooltip]="'Array'" (onClick)="addParentArray('array')">
+          </amexio-image>
+        </ng-template>
+
+
+
+        <ng-template #amexioBodyTmpl let-column let-row="row" let-index="index">
+            <amexio-image [icon-class]="'fa fa-code'"
+                          [tooltip]="'Object'" (onClick)="addData('object',row, index)">
+            </amexio-image>
+              <amexio-image [icon-class]="'fa fa-table'"
+                            [tooltip]="'Array'" (onClick)="addData('array',row, index)">
+              </amexio-image>
+              <amexio-image [icon-class]="'fa fa-columns'"
+                            [tooltip]="'Key'" (onClick)="addData('key',row, index)">
+              </amexio-image>
+          <amexio-image [icon-class]="'fa fa-trash'"
+                        [tooltip]="'Key'" (onClick)="onRemove(row)">
+          </amexio-image>
+        </ng-template>
+      </canvas-tree-column>
+    </canvas-tree-data-table>
+  </amexio-column>
+
+
+  <amexio-column [size]="'12'">
+    <div *ngFor="let data of parentJsonStructure">
+      {{data | json}}
+    </div>
+  </amexio-column>
+</amexio-row>
+
