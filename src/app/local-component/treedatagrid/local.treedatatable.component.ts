@@ -146,7 +146,7 @@ export class CanvasTreeDataTableComponent
       JSON.stringify(this.previousData) != JSON.stringify(this.data)
     ) {
       this.previousData = JSON.parse(JSON.stringify(this.data));
-      this.setData(this.data);
+      this.setChangeData(this.data);
     }
     if (
       JSON.stringify(this.columnPreviewData) !=
@@ -235,6 +235,15 @@ export class CanvasTreeDataTableComponent
 
       this.columns.push(columnData);
     }
+  }
+  setChangeData(httpResponse: any) {
+   // let treedata = this.getResponseData(httpResponse);
+    this.viewRows = httpResponse;
+    this.viewRows.forEach((row: any, index: any) => {
+      this.viewRows[index].level = 1;
+      this.viewRows[index].expand = false;
+    });
+    this.mask = false;
   }
 
   setData(httpResponse: any) {

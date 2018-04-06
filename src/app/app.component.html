@@ -20,11 +20,11 @@
                           [data-type]="'string'" [hidden]="false"
                           [text]="'Value'" [width]="30">
         <ng-template #amexioBodyTmpl let-column let-row="row">
-          <ng-container *ngIf="row?.readOnly;else value_else">
-            {{row.key}}
+          <ng-container *ngIf="row.type == 'key';else value_else">
+            <input type="text" [ngModel]="row.value" (ngModelChange)="valueOnChange($event,row)"/>
           </ng-container>
           <ng-template #value_else>
-            <input type="text" [ngModel]="row.value" (ngModelChange)="valueOnChange($event,row)"/>
+            {{row.value}}
           </ng-template>
 
 
@@ -46,15 +46,21 @@
 
 
         <ng-template #amexioBodyTmpl let-column let-row="row" let-index="index">
+          <ng-container *ngIf="row.type != 'key'">
             <amexio-image [icon-class]="'fa fa-code'"
-                          [tooltip]="'Object'" (onClick)="addData('object',row, index)">
+                          [tooltip]="'Object'" (onClick)="addDataObject('object',row, index)">
             </amexio-image>
+
               <amexio-image [icon-class]="'fa fa-table'"
-                            [tooltip]="'Array'" (onClick)="addData('array',row, index)">
+                            [tooltip]="'Array'" (onClick)="addDataObject('array',row, index)">
               </amexio-image>
-              <amexio-image [icon-class]="'fa fa-columns'"
-                            [tooltip]="'Key'" (onClick)="addData('key',row, index)">
-              </amexio-image>
+          </ng-container>
+          <ng-container *ngIf="showKeyIcon(row)">
+            <amexio-image [icon-class]="'fa fa-columns'"
+                          [tooltip]="'Key'" (onClick)="addDataObject('key',row, index)">
+            </amexio-image>
+          </ng-container>
+
           <amexio-image [icon-class]="'fa fa-trash'"
                         [tooltip]="'Key'" (onClick)="onRemove(row)">
           </amexio-image>
@@ -66,7 +72,7 @@
 
   <amexio-column [size]="'12'">
     <div *ngFor="let data of parentJsonStructure">
-      {{data | json}}
+     <pre><code></code>{{data | json}}</pre>
     </div>
   </amexio-column>
 </amexio-row>
