@@ -45,7 +45,7 @@
 
 
         <ng-template #amexioBodyTmpl let-column let-row="row" let-index="index">
-          <ng-container *ngIf="row.type != 'key'">
+          <ng-container *ngIf="row.type != 'key' && showRepeatIconInverse(row)">
             <amexio-image [icon-class]="'fa fa-code'"
                           [tooltip]="'Object'" (onClick)="addDataObject('object',row, index)">
             </amexio-image>
@@ -59,6 +59,13 @@
                           [tooltip]="'Key'" (onClick)="addDataObject('key',row, index)">
             </amexio-image>
           </ng-container>
+
+          <ng-container *ngIf="showRepeatIcon(row)">
+            <amexio-image [icon-class]="'fa fa-repeat'"
+                          [tooltip]="'repeat'" (onClick)="repeatObject('key',row, index)">
+            </amexio-image>
+          </ng-container>
+
 
           <amexio-image [icon-class]="'fa fa-trash'"
                         [tooltip]="'Key'" (onClick)="onRemove(row)">
