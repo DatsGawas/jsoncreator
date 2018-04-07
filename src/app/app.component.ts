@@ -14,9 +14,43 @@ export class AppComponent {
 
   localTreeData: any[] = [];
 
+  test1:any[];
+
 
   constructor(private _http: HttpClient,public cdf:ChangeDetectorRef) {
+   /* this.test1 = [
+      {
+        "countryName": "Myanmar",
+        "countryCode1": "MM",
+        "countryCode2": "MMR",
+        "countryFlag": "MM.png",
+        "capital": "",
+        "currencyCode": "MMK",
+        "currencyName": "Kyat",
+        "currencySymbol": "K",
+        "capitalLatitude": null,
+        "capitalLongitude": null,
+        "isoNumeric": 104
+      }
+    ];*/
   }
+/*
+  ttttt() {
+    this.test1 = [ {
+      "countryName": "Myanasadmar",
+      "countryCode1": "MM",
+      "countryCode2": "MMR",
+      "countryFlag": "MM.png",
+      "capital": "",
+      "currencyCode": "MMK",
+      "currencyName": "Kyat",
+      "currencySymbol": "K",
+      "capitalLatitude": null,
+      "capitalLongitude": null,
+      "isoNumeric": 104
+    }];
+
+  }*/
 
 
   /* UI Icon validation*/
@@ -52,13 +86,22 @@ export class AppComponent {
     const treeDataObjectStructure: any = this.createObjectStructure(type);
     if (rowData.hasOwnProperty('children')) {
           if (rowData.type == 'array' && type == 'object') {
-                treeDataObjectStructure.key = '[' + rowData.children.length + ']';
-                treeDataObjectStructure['readOnly'] = true;
+            debugger;
+            let cloneData: any;
+            cloneData = JSON.parse(JSON.stringify(rowData.children[0]));
+           rowData.children.push(this.createCloneData(cloneData,rowData.children.length));
+
+
+               /* treeDataObjectStructure.key = '[' + rowData.children.length + ']';
+                treeDataObjectStructure['readOnly'] = true;*/
           } else if(rowData.type == 'array' && type == 'array') {
               treeDataObjectStructure.key = '[]';
               treeDataObjectStructure['readOnly'] = true;
-            }
-          rowData.children.push(treeDataObjectStructure);
+            rowData.children.push(treeDataObjectStructure);
+            } else {
+            rowData.children.push(treeDataObjectStructure);
+          }
+
     } else {
           rowData['children'] = [];
           if (rowData.type == 'array' && type == 'object') {
@@ -73,6 +116,39 @@ export class AppComponent {
     this.toogle(rowData, index);
     this.createJsonData();
   }
+
+
+  createCloneData(cloneData: any,index:any): any {
+    let test: any[] = [];
+      const treeDataObjectStructure: any = this.createObjectStructure(cloneData.type);
+      if(cloneData.type == 'object') {
+           treeDataObjectStructure.key = '[' + index + ']';
+      } else {
+        treeDataObjectStructure.key = '[]';
+      }
+    treeDataObjectStructure.readOnly = true;
+     if(cloneData.hasOwnProperty('children')) {
+       treeDataObjectStructure['children'] = [];
+       this.childSearch(cloneData,treeDataObjectStructure);
+     }
+     debugger;
+      test.push(treeDataObjectStructure);
+      return test[0];
+  }
+
+  childSearch(child:any, parentRef:any) {
+    child.children.forEach((opt:any) => {
+      const treeDataObjectStructure: any = this.createObjectStructure(opt.type);
+      treeDataObjectStructure.key = opt.key;
+      if(opt.hasOwnProperty('children')) {
+        debugger;
+        treeDataObjectStructure['children'] = [];
+        this.childSearch(opt,treeDataObjectStructure);
+      }
+      parentRef.children.push(treeDataObjectStructure);
+    });
+  }
+
 
   keyOnChange(event:any, data: any) {
     data.key = event;
@@ -171,7 +247,6 @@ export class AppComponent {
         }
 
       }else  if(option.type == 'object') {
-        debugger
         let localArray:any;
         localArray = {};
         parentRef.push(localArray);
