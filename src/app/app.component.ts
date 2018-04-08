@@ -107,20 +107,16 @@ export class AppComponent {
   addDataObject(type: any, rowData: any, index: any) {
     const treeDataObjectStructure: any = this.createObjectStructure(type);
     if (rowData.hasOwnProperty('children')) {
-         /* if (rowData.type == 'array' && type == 'object') {
-            debugger;
-            let cloneData: any;
-            cloneData = JSON.parse(JSON.stringify(rowData.children[0]));
-           rowData.children.push(this.createCloneData(cloneData,rowData.children.length));
-               /!* treeDataObjectStructure.key = '[' + rowData.children.length + ']';
-                treeDataObjectStructure['readOnly'] = true;*!/
+          if (rowData.type == 'array' && type == 'object') {
+                treeDataObjectStructure.key = '[' + rowData.children.length + ']';
+                treeDataObjectStructure['readOnly'] = true;
           } else if(rowData.type == 'array' && type == 'array') {
               treeDataObjectStructure.key = '[]';
               treeDataObjectStructure['readOnly'] = true;
             rowData.children.push(treeDataObjectStructure);
             } else {
             rowData.children.push(treeDataObjectStructure);
-          }*/
+          }
 
     } else {
           rowData['children'] = [];
