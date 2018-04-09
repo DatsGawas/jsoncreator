@@ -77,9 +77,6 @@ export class AppComponent {
 
   }
 
-
-
-
   addParentObject() {
     const treeDataObjectStructure: any = this.createObjectStructure('object');
     treeDataObjectStructure.key = '{}';
