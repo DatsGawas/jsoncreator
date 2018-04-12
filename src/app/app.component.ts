@@ -5,8 +5,7 @@ import {and} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
 
@@ -14,44 +13,9 @@ export class AppComponent {
 
   localTreeData: any[] = [];
 
-  test1:any[];
-
 
   constructor(private _http: HttpClient,public cdf:ChangeDetectorRef) {
-   /* this.test1 = [
-      {
-        "countryName": "Myanmar",
-        "countryCode1": "MM",
-        "countryCode2": "MMR",
-        "countryFlag": "MM.png",
-        "capital": "",
-        "currencyCode": "MMK",
-        "currencyName": "Kyat",
-        "currencySymbol": "K",
-        "capitalLatitude": null,
-        "capitalLongitude": null,
-        "isoNumeric": 104
-      }
-    ];*/
   }
-/*
-  ttttt() {
-    this.test1 = [ {
-      "countryName": "Myanasadmar",
-      "countryCode1": "MM",
-      "countryCode2": "MMR",
-      "countryFlag": "MM.png",
-      "capital": "",
-      "currencyCode": "MMK",
-      "currencyName": "Kyat",
-      "currencySymbol": "K",
-      "capitalLatitude": null,
-      "capitalLongitude": null,
-      "isoNumeric": 104
-    }];
-
-  }*/
-
 
   /* UI Icon validation*/
 

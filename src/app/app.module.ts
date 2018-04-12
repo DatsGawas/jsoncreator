@@ -11,8 +11,7 @@ import {CanvasTreeColumnComponent} from "./local-component/treedatagrid/local-tr
 
 @NgModule({
   declarations: [
-    AppComponent, CanvasTreeDataTableComponent, CanvasTreeColumnComponent,
-   /* AmexioDatagridComponent, AmexioGridColumnComponent*/
+    AppComponent, CanvasTreeDataTableComponent, CanvasTreeColumnComponent
   ],
   imports: [
     BrowserModule,
